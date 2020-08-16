@@ -7,19 +7,30 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hapi/iron": "^6.0.0",
+    "cookie": "^0.4.1",
     "mobx": "^5.9.0",
-    "mobx-react": "^5.4.3",
+    "mobx-react": "^6.2.5",
     "mobx-react-lite": "^2.0.7",
     "mobx-state-tree": "^3.11.0",
+    "mysql": "^2.18.1",
     "next": "latest",
+    "next-connect": "^0.8.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "typescript": "^3.0.1"
+    "reflect-metadata": "^0.1.13",
+    "swr": "^0.3.0",
+    "typeorm": "^0.2.25"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.3.0",
+    "@types/cookie": "^0.4.0",
     "@types/node": "^14.0.23",
-    "@types/react": "^16.4.12"
+    "@types/react": "^16.4.12",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "license": "ISC"
 }
