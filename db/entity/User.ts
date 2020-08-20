@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Index} from "typeorm";
 import { Organization } from "./Organization";
 // export type UserState = "active" | "deactive"
 export enum UserRole {
@@ -12,33 +12,30 @@ export enum UserRole {
 export class User {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column('varchar')
-    email: string;
+    @Index()
+    email!: string;
 
     @Column('varchar')
-    password: string;
+    password!: string;
 
     @Column({
         type: "enum",
-        enum: ["admin", "active", "deactive"],
+        enum: UserRole,
         default: 'active'
     })
-    role: UserRole;
+    role!: UserRole;
 
     @Column('varchar')
-    salt: string;
+    salt!: string;
 
-    @OneToMany(type => Organization, org => org.user)
-    own_organization: Organization[];
     // @Column({
     //     type: 'enum',
     //     emun: ["admin", "active", 'deactive'],
     //     default: 'active'
     // })
     // role: UserRole
-
-
 
 }

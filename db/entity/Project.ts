@@ -1,36 +1,32 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, } from "typeorm";
 import { Organization } from "./Organization";
 import { Contact } from "./Contact";
 
 @Entity()
 export class Project {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
-    @Column("varchar",{length: 350})
-    expertise_required: string;
+    @Column("varchar",{length: 1000})
+    expertise_required?: string;
 
     @Column("simple-array")
-    clinical_expertise: string[];
+    clinical_expertise?: string[];
 
     @Column('tinyint')
-    COVID_19: boolean;
+    COVID_19!: boolean;
 
-    @Column(type => Contact)
-    contact: Contact;
+    @OneToOne(type => Contact)
+    @JoinColumn()
+    contact!: Contact;
 
     @ManyToOne(type => Organization, org => org.id)
-    organization: Organization;
+    organization!: Organization;
 
     @Column('date')
-    start: Date;
+    start!: Date;
 
     @Column('date')
-    end: Date;
+    end!: Date;
 
-    @Column('varchar')
-    country: string;
-
-    @Column('varchar')
-    state: string;
 }

@@ -1,35 +1,36 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany} from "typeorm";
 import { CipherNameAndProtocol } from "tls";
 import { User } from "./User";
+import { Person } from "./Person";
 
 @Entity()
 export class Organization {
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
 
     @Column('varchar')
-    name: string;
+    name!: string;
 
     @Column('text')
-    brief: string;
+    brief?: string;
 
     @Column({
         type: "enum",
         enum: ["admin", "active", "deactive"],
         default: 'active'
     })
-    status: string;
+    status!: string;
 
     @Column('varchar')
-    website: string;
+    website!: string;
 
     @Column('simple-array')
-    mailext: string[];
+    mailext!: string[];
 
-    @ManyToOne(type => User, user => user.own_organization)
-    user: User;
+    @ManyToOne(type => Person, p => p.belong_organization, {cascade: true})
+    people?: Person[];
 
     @Column('tinyint')
-    member: boolean;
+    member!: boolean;
 
 }

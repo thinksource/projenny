@@ -18,20 +18,21 @@ interface LoginStatus {
 const LoginPage: FC<LoginProps> = () =>  {
   const [user, { mutate }] = useUser()
   const [errorMsg, setErrorMsg] = useState('')
-  const username = useRef(null);
-  const password = useRef(null);
+  const username = useRef<HTMLInputElement>(null);
+  const password = useRef<HTMLInputElement>(null);
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({username: username.current.value, password: password.current.value}),
+    const res = await fetch('/api/user/login', {
+      method: "POST",
+      headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify({username: username.current?.value, password: password.current?.value}),
     })
 
     if (res.status === 200) {
       const userObj = await res.json()
       // set user to useSWR state
       mutate(userObj)
+      console.log(userObj)
     } else {
       setErrorMsg('Incorrect username or password. Try better!')
     }
@@ -47,7 +48,7 @@ const LoginPage: FC<LoginProps> = () =>  {
       <h1>Login to Example</h1>
       {errorMsg && <p className="error">{errorMsg}</p>}
       <div className="form-container">
-        <form onSubmit={handleSubmit}>
+        <form >
           <label>
             <span>Username</span>
             <input type="text" name="username" ref={username} required />
@@ -57,7 +58,7 @@ const LoginPage: FC<LoginProps> = () =>  {
             <input type="password" name="password" ref={password} required />
           </label>
           <div className="submit">
-            <input type="submit" value="Login" />
+            <input type="button" onClick={handleSubmit} value="Login" />
             <Link href="/signup">
               <a>I don't have an account</a>
             </Link>

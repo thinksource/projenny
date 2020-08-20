@@ -1,7 +1,8 @@
 import "reflect-metadata";
-import {getManager, createConnection, EntityManager, getConnectionManager, Db, getConnection} from "typeorm";
+import {getManager, createConnection, EntityManager, getConnectionManager, Db, getConnection, Connection} from "typeorm";
 import crypto from 'crypto';
 import { User } from "./entity/User";
+// import { dbManager } from "../next-env";
 
 export const pwhash = (contents: string, salt: string) => crypto.pbkdf2Sync(contents, salt, 1000, 64,'sha512').toString('hex');
 
@@ -36,28 +37,51 @@ export const pwhash = (contents: string, salt: string) => crypto.pbkdf2Sync(cont
 // }).catch(error => {throw error})
 
 // export const db : EntityManager = dbManager.then(db => {return db})
-// export const connManager = getConnectionManager();
-// const connection = connManager.create({
-//     type: "mysql",
-//     host: "localhost",
-//     port: 3306,
-//     username: "admin",
-//     password: "password",
-//     database: "dyform",
-// });
+const connManager = getConnectionManager();
+const connection = connManager.create({
+    type: "mysql",
+    host: "localhost",
+    port: 3306,
+    username: "admin",
+    password: "password",
+    database: "dyform",
+});
+// let dbinit= false
 // const exe = async  () =>  {
-//   await connection.connect();
+//   await connection.connect();  
 // };
 // exe();
-createConnection({
-        type: "mysql",
-        host: "localhost",
-        port: 3306,
-        username: "admin",
-        password: "password",
-        database: "dyform",
-        entities: [__dirname + "./entity/*.js"],
-        synchronize: true
-      });
-export const dbManager = getConnection().manager;
+// // if (!connection.manager){
+//     exe();
+// }
+// console.log('-------------------------------')
+// console.log(connection.manager)
+
+// const conn = createConnection({
+//         type: "mysql",
+//         host: "localhost",
+//         port: 3306,
+//         username: "admin",
+//         password: "password",
+//         database: "dyform",
+//         entities: [__dirname + "./entity/*.js"],
+//         synchronize: true
+//       });
+export const dbManager = connManager.get().manager;
+// let t = false
+// let dbconn : Connection
+// let db = async function(mark: boolean)  {
+//   if (!mark){
+//     dbconn = await connection.connect()
+//     mark = true;
+//   }
+//   return dbconn.manager
+// }
+// export const dbManager: EntityManager = () => {
+//   try{
+//     return db(t)
+//   }catch(err){
+//     throw 
+//   }
+// }
 

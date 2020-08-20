@@ -44,8 +44,8 @@ export async function findUser(email: string, password: string){
 
 export async function deletUser(email: string, password: string, role: string){
     const user = await dbManager.findOne(User, {email});
-    dbManager.update(User, user.id, {role: UserRole.blocked});
     if(user){
+        dbManager.update(User, user.id, {role: UserRole.blocked});
         const passwordhash = pwhash(password, user.salt);
         if( passwordhash === user.password || role === UserRole.admin){
             return {

@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToOne, JoinColumn} from "typeorm";
 import { Organization } from "./Organization";
 import { Contact } from "./Contact";
 
@@ -6,24 +6,25 @@ import { Contact } from "./Contact";
 export class Technology {
     
     @PrimaryGeneratedColumn()
-    id: number;
+    id!: number;
     
     @Column('varchar')
-    name: string;
+    name!: string;
 
-    @Column("varchar",{length: 350})
-    brief: string;
+    @Column("varchar",{length: 1000})
+    brief?: string;
 
     @Column('varchar')
-    link: string;
+    link?: string;
 
     @Column('tinyint')
-    COVID_19: boolean;
+    COVID_19!: boolean;
 
     @ManyToOne(type => Organization, org => org.id)
-    organization: Organization;
+    organization!: Organization;
 
-    @Column(type => Contact)
-    contact: Contact;
+    @OneToOne(type => Contact)
+    @JoinColumn()
+    contact!: Contact;
 
 }

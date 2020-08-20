@@ -1,5 +1,6 @@
-import {Entity, Column} from "typeorm";
+import {Entity, Column, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import { ExecSyncOptionsWithBufferEncoding } from "child_process";
+import { Person } from "./Person";
 export enum PersonTitle {
     Mr = "Mr",
     Miss = "Miss",
@@ -9,26 +10,39 @@ export enum PersonTitle {
     Blank = ""
 }
 
+@Entity()
 export class Contact {
+    @PrimaryGeneratedColumn()
+    id!: number;
+    
     @Column({
         type: "enum",
         enum: PersonTitle,
         default: PersonTitle.Blank
         })
-    title: string;
+    title?: string;
 
     @Column('varchar')
-    first_name: string;
+    first_name!: string;
 
     @Column('varchar')
-    last_name: string;
+    last_name!: string;
 
     @Column('varchar')
-    job_title: string;
+    job_title!: string;
 
     @Column('varchar')
-    email: string;
+    email!: string;
 
     @Column('tinyint')
-    member: boolean;
+    member!: boolean;
+
+    @Column('varchar')
+    country!: string;
+
+    @Column('varchar')
+    state!: string;
+
+    @ManyToOne(type=> Person, p=>p.id)
+    person!: Person;
 }
